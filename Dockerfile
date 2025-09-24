@@ -1,10 +1,12 @@
 FROM php:8.2-apache
 
-# Установим расширения для MySQL
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Копируем проект в контейнер
+# Копируем весь проект в DocumentRoot
 COPY . /var/www/html/
 
-# Настроим права
+# Даем права Apache
 RUN chown -R www-data:www-data /var/www/html
+
+# Включаем mod_rewrite, если нужны ЧПУ
+RUN a2enmod rewrite
