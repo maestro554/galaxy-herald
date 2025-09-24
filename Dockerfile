@@ -1,16 +1,16 @@
-# Базовый образ с PHP и Apache
-FROM php:8.2-apache
+# Используем стабильный официальный образ PHP с Apache
+FROM php:8.2.29-apache
 
 # Устанавливаем расширения для работы с MySQL
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Копируем весь проект в корень Apache
+# Копируем проект в корень Apache
 COPY . /var/www/html/
 
-# Даем права Apache
+# Даем права Apache на файлы
 RUN chown -R www-data:www-data /var/www/html
 
-# Включаем mod_rewrite, если понадобятся ЧПУ
+# Включаем mod_rewrite для ЧПУ, если нужно
 RUN a2enmod rewrite
 
 # Подавляем предупреждение ServerName
